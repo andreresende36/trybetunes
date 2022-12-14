@@ -91,14 +91,18 @@ export default class Search extends Component {
         <div className="albumCardsContainer">
           {albumArray.map((album) => (
             <div key={ album.collectionId } className="albumCard">
-              <img src={ album.artworkUrl100 } alt="imagem do álbum" />
               <Link
                 to={ `/album/${album.collectionId}` }
                 data-testid={ `link-to-album-${album.collectionId}` }
               >
-                {album.collectionName}
+                <img
+                  src={ album.artworkUrl100 }
+                  alt="imagem do álbum"
+                  className="albumImg"
+                />
+                <p>{album.collectionName}</p>
+                <p>{album.artistName}</p>
               </Link>
-              <p>{album.artistName}</p>
             </div>
           ))}
         </div>
