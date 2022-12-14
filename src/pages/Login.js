@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { createUser } from '../services/userAPI';
 import Loading from '../components/Loading';
 
@@ -7,7 +7,6 @@ export default class Login extends Component {
   state = {
     userName: '',
     disableBtn: true,
-    loggedIn: false,
   };
 
   handleChange = ({ target: { name, value } }) => {
@@ -30,12 +29,15 @@ export default class Login extends Component {
     this.setState({ isLoading: true });
     createUser({ name: userName })
       .then(() => {
-        this.setState({ isLoading: false, loggedIn: true });
+        this.setState({ isLoading: false }, () => {
+          const { handleLogin } = this.props;
+          handleLogin(true);
+        });
       });
   };
 
   render() {
-    const { userName, disableBtn, isLoading, loggedIn } = this.state;
+    const { userName, disableBtn, isLoading } = this.state;
     const { handleChange, handleClick } = this;
     return (
       <div data-testid="page-login">
@@ -61,10 +63,13 @@ export default class Login extends Component {
             >
               Entrar
             </button>
-            {loggedIn ? (<Redirect to="/search" />) : null}
           </form>
         )}
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+};
