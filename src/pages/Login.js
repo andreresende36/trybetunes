@@ -41,7 +41,6 @@ export default class Login extends Component {
     const { handleChange, handleClick } = this;
     return (
       <div data-testid="page-login">
-        <h2>Login</h2>
         {isLoading ? (<Loading isLoading={ isLoading } />) : (
           <form>
             <label htmlFor="userName">
