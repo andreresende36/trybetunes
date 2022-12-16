@@ -18,3 +18,9 @@
   margin: auto;
   width: 50%;
 }
+
+.musicCard {
+  border: 2px solid black;
+  height: 120px;
+  width: 80%;
+}
