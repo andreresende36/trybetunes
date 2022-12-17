@@ -18,9 +18,11 @@ export default class MusicCard extends Component {
   handleFavorite = ({ target: { checked } }) => {
     const { trackObj } = this.props;
     this.setState(() => ({ isLoading: true }));
+    // Adiciona música favorita
     if (checked) {
       addSong(trackObj).then(() => { this.updateArrayAndLoading(); });
     } else {
+    // Remove música favorita
       removeSong(trackObj).then(() => { this.updateArrayAndLoading(); });
     }
   };
