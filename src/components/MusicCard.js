@@ -28,11 +28,11 @@ export default class MusicCard extends Component {
   };
 
   render() {
-    const { trackObj } = this.props;
-    const { trackName, previewUrl, trackId } = trackObj;
-    const { state: { isLoading }, handleFavorite } = this;
     const {
-      props: { favoriteSongs } } = this;
+      state: { isLoading },
+      props: { trackObj, favoriteSongs },
+      handleFavorite } = this;
+    const { trackName, previewUrl, trackId } = trackObj;
     const card = (
       <>
         <p>{ trackName }</p>
