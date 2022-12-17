@@ -33,28 +33,27 @@ export default class MusicCard extends Component {
     const { state: { isLoading }, handleFavorite } = this;
     const {
       props: { favoriteSongs } } = this;
+    const card = (
+      <>
+        <p>{ trackName }</p>
+        <audio data-testid="audio-component" src={ previewUrl } controls>
+          <track kind="captions" />
+        </audio>
+        <label htmlFor="favorite-input">
+          Favorita
+          <input
+            type="checkbox"
+            id="favorite-input"
+            data-testid={ `checkbox-music-${trackId}` }
+            onChange={ handleFavorite }
+            checked={ favoriteSongs.some((song) => song.trackId === trackId) }
+          />
+        </label>
+      </>
+    );
     return (
       <div className="musicCard">
-        {isLoading
-          ? (<Loading />)
-          : (
-            <>
-              <p>{ trackName }</p>
-              <audio data-testid="audio-component" src={ previewUrl } controls>
-                <track kind="captions" />
-              </audio>
-              <label htmlFor="favorite-input">
-                Favorita
-                <input
-                  type="checkbox"
-                  id="favorite-input"
-                  data-testid={ `checkbox-music-${trackId}` }
-                  onChange={ handleFavorite }
-                  checked={ favoriteSongs.some((song) => song.trackId === trackId) }
-                />
-              </label>
-            </>
-          )}
+        {isLoading ? (<Loading />) : card }
       </div>
     );
   }
