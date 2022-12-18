@@ -11,7 +11,7 @@ export default class ProfileEdit extends Component {
     image: '',
     description: '',
     isLoading: true,
-    disableBtn: true,
+    disableBtn: false,
   };
 
   async componentDidMount() {
@@ -22,7 +22,7 @@ export default class ProfileEdit extends Component {
         email: data.email,
         description: data.description,
         image: data.image,
-      }, this.validation);
+      });
     });
   }
 
