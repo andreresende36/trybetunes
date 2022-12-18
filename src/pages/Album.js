@@ -8,24 +8,22 @@ import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 export default class Album extends Component {
   state = {
     tracksArray: [],
+    favoriteSongs: [],
     artist: '',
     album: '',
-    favoriteSongs: [],
   };
 
   async componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
-    getMusics(id)
-      .then((response) => this.setState({
-        tracksArray: response,
-      }, () => {
-        this.setState((prevState) => (
-          { artist: prevState.tracksArray[0].artistName,
-            album: prevState.tracksArray[0].collectionName,
-          }));
-      }));
-    this.setState({ favoriteSongs: await getFavoriteSongs() });
+    const response = await getMusics(id);
+
+    this.setState({
+      tracksArray: response,
+      artist: response[0].artistName,
+      album: response[0].collectionName,
+    });
+    this.updateFavoriteSongs();
   }
 
   updateFavoriteSongs = async () => {

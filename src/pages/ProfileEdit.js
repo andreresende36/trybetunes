@@ -39,13 +39,9 @@ export default class ProfileEdit extends Component {
 
   handleClick = () => {
     const { name, email, image, description } = this.state;
-    const user = {
-      name,
-      email,
-      image,
-      description,
-    };
+    const user = { name, email, image, description };
     const { history: { push } } = this.props;
+
     this.setState({ isLoading: true }, async () => {
       await updateUser(user);
       push('/profile');

@@ -7,6 +7,7 @@ export default class Login extends Component {
   state = {
     userName: '',
     disableBtn: true,
+    isLoading: false,
   };
 
   handleChange = ({ target: { name, value } }) => {
@@ -15,25 +16,17 @@ export default class Login extends Component {
     }, () => {
       const minChar = 3;
       const { userName } = this.state;
-      if (userName.length >= minChar) {
-        this.setState({ disableBtn: false });
-      } else {
-        this.setState({ disableBtn: true });
-      }
+      this.setState({ disableBtn: userName.length < minChar });
     });
   };
 
-  handleClick = (event) => {
-    event.preventDefault();
+  handleClick = () => {
     const { userName } = this.state;
+    const { history: { push } } = this.props;
+
     this.setState({ isLoading: true });
-    createUser({ name: userName })
-      .then(() => {
-        this.setState({ isLoading: false }, () => {
-          const { handleLogin } = this.props;
-          handleLogin(true);
-        });
-      });
+    createUser({ name: userName });
+    push('/search');
   };
 
   render() {
@@ -55,7 +48,7 @@ export default class Login extends Component {
             </label>
             <br />
             <button
-              type="submit"
+              type="button"
               disabled={ disableBtn }
               onClick={ handleClick }
               data-testid="login-submit-button"
@@ -70,5 +63,7 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-  handleLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };

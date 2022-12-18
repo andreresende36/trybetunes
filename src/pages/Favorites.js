@@ -9,7 +9,7 @@ export default class Favorites extends Component {
   };
 
   async componentDidMount() {
-    this.setState({ favoriteSongs: await getFavoriteSongs() });
+    this.updateFavoriteSongs();
   }
 
   updateFavoriteSongs = async () => {

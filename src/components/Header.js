@@ -6,22 +6,13 @@ import Loading from './Loading';
 export default class Header extends Component {
   state = {
     isLoading: true,
-    userName: '',
+    userName: 'Carregando...',
   };
 
-  componentDidMount() {
-    this.handleUserName();
+  async componentDidMount() {
+    const user = await getUser();
+    this.setState({ isLoading: false, userName: user.name });
   }
-
-  handleUserName = () => {
-    getUser()
-      .then((user) => {
-        this.setState({ isLoading: false, userName: user.name }, () => {
-          const { userName } = this.state;
-          return userName;
-        });
-      });
-  };
 
   render() {
     const { state: { isLoading, userName } } = this;
@@ -30,8 +21,9 @@ export default class Header extends Component {
         <Link to="/search" data-testid="link-to-search">Pesquisa</Link>
         <Link to="/favorites" data-testid="link-to-favorites">Favoritas</Link>
         <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
-        {isLoading ? (<Loading />) : null }
-        <p data-testid="header-user-name">{ userName }</p>
+        {isLoading
+          ? (<Loading />)
+          : <p data-testid="header-user-name">{ userName }</p> }
       </div>
     );
   }

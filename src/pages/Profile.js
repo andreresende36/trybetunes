@@ -7,17 +7,12 @@ import { getUser } from '../services/userAPI';
 export default class Profile extends Component {
   state = {
     user: {},
-    isLoading: false,
+    isLoading: true,
   };
 
   async componentDidMount() {
-    getUser()
-      .then((data) => {
-        this.setState({
-          user: data,
-          isLoading: false,
-        });
-      });
+    const user = await getUser();
+    this.setState({ user, isLoading: false });
   }
 
   render() {
